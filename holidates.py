@@ -28,4 +28,4 @@ for index, row in sales.iterrows():
     except:
         print(f"Row {index} of {total_rows}: unable to assign value, skipping...")
 
-sales.to_csv("data/sales_updated.csv")
+sales.to_csv("data/sales_updated.csv", index=False)
