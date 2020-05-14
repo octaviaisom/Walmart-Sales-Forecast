@@ -34,8 +34,6 @@ This project will explore the sales data of 45 Wal-Mart locations. Exploritory d
 ## Project Description
 TBD
 
----
-
 ## Acknowledgments
 * [Walmart Recruiting's Kaggle Competition](https://www.kaggle.com/c/walmart-recruiting-store-sales-forecasting)
 * [Jose Portillo's Time Series Analysis Course](https://www.udemy.com/course/python-for-time-series-data-analysis/)
