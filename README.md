@@ -4,7 +4,7 @@
 #### PROJECT STATUS: [Active]
 
 ## Project Objective
-This project will explore the sales data of 45 Wal-Mart locations. Exploritory data analysis will be perfomed at the store and department level; the finding will be used to forecast the sales and create an analytical dashboard.
+This project explores the sales data of 45 Walmart locations. Exploritory data analysis was perfomed at the store and department level; the finding were used to forecast the sales and create an analytical dashboard.
 
 ## Getting Started
 
@@ -36,4 +36,4 @@ TBD
 
 ## Acknowledgments
 * [Walmart Recruiting's Kaggle Competition](https://www.kaggle.com/c/walmart-recruiting-store-sales-forecasting)
-* [Jose Portillo's Time Series Analysis Course](https://www.udemy.com/course/python-for-time-series-data-analysis/)
+* [Jose Portilla's Time Series Analysis Course](https://www.udemy.com/course/python-for-time-series-data-analysis/)
