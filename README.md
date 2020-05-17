@@ -36,4 +36,4 @@ TBD
 
 ## Acknowledgments
 * [Walmart Recruiting's Kaggle Competition](https://www.kaggle.com/c/walmart-recruiting-store-sales-forecasting)
-* [Jose Portillo's Time Series Analysis Course](https://www.udemy.com/course/python-for-time-series-data-analysis/)
+* [Jose Portilla's Time Series Analysis Course](https://www.udemy.com/course/python-for-time-series-data-analysis/)
