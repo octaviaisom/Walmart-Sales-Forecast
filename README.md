@@ -4,7 +4,7 @@
 #### PROJECT STATUS: [Active]
 
 ## Project Objective
-This project will explore the sales data of 45 Wal-Mart locations. Exploritory data analysis will be perfomed at the store and deparment level; the finding will be used to forecast the sales and create an analytical dashboard.
+This project will explore the sales data of 45 Wal-Mart locations. Exploritory data analysis will be perfomed at the store and department level; the finding will be used to forecast the sales and create an analytical dashboard.
 
 ## Getting Started
 
