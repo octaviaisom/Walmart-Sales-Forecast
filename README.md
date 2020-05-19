@@ -22,8 +22,7 @@ This project explores the sales data of 45 Walmart locations. Exploratory data a
 * Inferential Statistics
     * Machine Learning (K-Means Clustering)
     * Predictive Modeling (SARIMA)
-* Descriptive Statistics
-    * Data Visualization (Matplotlib, Seaborn, D3.js)
+* Data Visualization (D3.js)
 
 ## Project Description
 TBD
