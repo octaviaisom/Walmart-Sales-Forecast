@@ -4,7 +4,7 @@
 #### PROJECT STATUS: [Active]
 
 ## Project Objective
-This project explores the sales data of 45 Walmart locations. Exploritory data analysis was perfomed at the store and department level; the finding were used to forecast the sales and create an analytical dashboard.
+This project explores the sales data of 45 Walmart locations. Exploratory data analysis was performed at the store and department level; the findings were used to forecast the sales and create an analytical dashboard.
 
 ## Getting Started
 
@@ -12,24 +12,17 @@ This project explores the sales data of 45 Walmart locations. Exploritory data a
 
 ## Technologies Used
 * Python
-    * Pandas
-    * Matplotlib
-    * Seaborn
-    * Sklearn
-    * Statsmodels
 * HTML
 * CSS
 * JavaScript
-    * D3.js
 
 ## Methods Used
-* Date Processing/Cleaning
-* Data Exploration
+* Date Processing/Cleaning (Pandas)
+* Data Exploration (Matplotlib, Seaborn)
 * Inferential Statistics
-    * Machine Learning
-    * Predictive Modeling
-* Descriptive Statistics
-    * Data Visualization
+    * Machine Learning (K-Means Clustering)
+    * Predictive Modeling (SARIMA)
+* Data Visualization (D3.js)
 
 ## Project Description
 TBD
