@@ -12,17 +12,20 @@ This project explores the sales data of 45 Walmart locations. Exploratory data a
 
 ## Technologies Used
 * Python
-* HTML
-* CSS
-* JavaScript
+   * Plotly
+   * Dash
+   * Pandas
+   * Numpy
+   * SKLearn
+   * Statsmodel
 
 ## Methods Used
-* Date Processing/Cleaning (Pandas)
-* Data Exploration (Matplotlib, Seaborn)
+* Date Processing/Cleaning
+* Data Exploration
 * Inferential Statistics
-    * Machine Learning (K-Means Clustering)
-    * Predictive Modeling (SARIMA)
-* Data Visualization (D3.js)
+    * Machine Learning
+    * Predictive Modeling
+* Data Visualization
 
 ## Project Description
 TBD
