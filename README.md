@@ -8,7 +8,7 @@ This project explores the sales data of 45 Walmart locations. Exploratory data a
 
 ## Getting Started
 
-*The dashboard has been delopyed via GitHub Pages and can be accessed via this [link](https://octaviaisom.github.io/Walmart-Sales-Forecast/).*
+TBD
 
 ## Technologies Used
 * Python
