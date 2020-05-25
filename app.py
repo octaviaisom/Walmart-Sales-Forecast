@@ -1,12 +1,11 @@
 import plotly.graph_objects as go # or plotly.express as px
-
-
-
 import dash
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
+import plotly.express as px
+import main
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
@@ -70,7 +69,7 @@ def toggle_active_links(pathname):
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname in ["/", "/page-1"]:
-        bar = go.Figure(data=go.Bar(x=['a','b','c'],y=[2, 3, 1]))
+        bar = main.store_plots()
         page1 = html.Div([
             dcc.Graph(figure=bar)
         ])
