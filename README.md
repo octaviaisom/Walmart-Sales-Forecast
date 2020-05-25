@@ -4,7 +4,7 @@
 #### PROJECT STATUS: [Active]
 
 ## Project Overview
-This project explores the sales data of several Walmart locations. Exploratory data analysis was performed at the store and department level, the findings were used to forecast sales. Visuals were created with the use of Plotly and then deployed via a Dash app.
+This project explores the sales of several Walmart locations. Exploratory data analysis was performed at the store and department level, the findings were used to forecast sales. Visuals were created with the use of Plotly and then deployed via a Dash app.
 
 ## Getting Started
 
