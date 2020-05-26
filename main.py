@@ -43,7 +43,7 @@ stores = pd.DataFrame(csv3)
 
 #setting color palette for charts
 pio.templates.default = "plotly_white"
-walmart_palette = ['#004c91','#ffc220','#f47321','#007dc6','#78b9e7','#76c043']
+walmart_palette = ['#004c91','#007dc6','#78b9e7','#ffc220','#f47321','#76c043']
 
 #---------------------------------------------------------------------------------------
 
@@ -120,11 +120,11 @@ def store_plots():
     store_size_box.update_traces(width=0.7)
     
 
-    return size_dist, store_scatter_sf, store_size_box, store_type_box
+    return store_size_box, store_type_box, size_dist, store_scatter_sf
 
 #---------------------------------------------------------------------------------------
 
-'''#Sales by Dept
+#Sales by Dept
 def dept_plots():
     from statsmodels.tsa.stattools import adfuller
 
@@ -162,16 +162,17 @@ def dept_plots():
     
     
     byStat = pd.merge(sales, stationarities, on='Dept', how='left')
-    print(byStat.head())
     byStat = byStat.groupby(['Stationary','Date'], as_index=False).sum()
 
-    byStat_line = px.line(byStat,x='Date', y='Weekly_Sales', color='Stationary',color_discrete_sequence=walmart_palette)   
+    byStat_line = px.line(byStat,x='Date', y='Weekly_Sales', color='Stationary',color_discrete_sequence=walmart_palette)  
+    #byStat_line.update_layout(legend_orientation="h")
+
     byStat_pie = px.pie(byStat, values='Weekly_Sales', names='Stationary',color_discrete_sequence=walmart_palette)
-
+    byStat_pie.update_layout(showlegend=False)
     
-    return byStat_line
+    return byStat_line, byStat_pie
 
-#Create Models
+'''#Create Models
 def model_plots():
     from statsmodels.tsa.statespace.sarimax import SARIMAX
     from pmdarima import auto_arima    
