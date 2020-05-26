@@ -41,10 +41,6 @@ content_style = {
     "padding": "2rem 1rem",
 }
 
-tab_style = {
-    "margin-left": "auto",
-}
-
 #-----------------------------------------------------------------------
 
 #SIDEBAR COMPONENTS
@@ -65,8 +61,8 @@ sidebar = html.Div(
                     dbc.DropdownMenuItem(divider=True),
 
                     dbc.DropdownMenuItem("Predictive Modeling", header=True),
-                    dbc.DropdownMenuItem("Modeling", href="/models"),
-                    dbc.DropdownMenuItem("Forecasting", href="/fcast"),
+                    dbc.DropdownMenuItem("Models", href="/models"),
+                    dbc.DropdownMenuItem("Forecast", href="/fcast"),
                     dbc.DropdownMenuItem(divider=True),
 
                     dbc.DropdownMenuItem("Conclusion", href="/conclusion"),
@@ -109,7 +105,7 @@ app.layout = html.Div([dcc.Location(id="url"),sidebar, content])
 
 #PAGE RENDERING/ROUTING
 def render_page_content(pathname):
-    
+    #HOMES/SALES PAGE
     if pathname == "/":
         #sidebar components
         header = html.H4("Sales Forecast", className="display-4")
@@ -121,12 +117,13 @@ def render_page_content(pathname):
         #content components
         content = html.Div(
                         [
+                            #sales chart
                             dbc.Row(dbc.Col(html.Div(dcc.Graph(figure=sales)))),
                         ]
                     )
         return content, header, paragraph, progress_bar, buttons
 
-#STORE PAGE ROUTE
+    #STORE PAGE
     elif pathname == "/stores":
         #sidebar components
         header = html.H4("Exploratory Data Analysis", className="display-4")
@@ -138,10 +135,11 @@ def render_page_content(pathname):
         #content components
         content = html.Div(
                         [
-                            #content text
-                            dbc.Row(dbc.Col(html.P("hhh"))),
 
-                            #Charts
+                            #section 1 text
+                            dbc.Row(dbc.Col(html.H5("How were the store types clustered?"))),   
+
+                            #section 1 charts
                             dbc.Row(
                                 [
                                     dbc.Col(html.Div(dcc.Graph(figure=store1))),
@@ -149,25 +147,23 @@ def render_page_content(pathname):
                                 ]
                             ),
 
-                            #content text
-                            dbc.Row(dbc.Col(html.P("hhh"))),
+                            #section 2 text
+                            dbc.Row(dbc.Col(html.H5("Does type/size influence a store's profitability?"))),
 
-                            #Charts
+                            #section 2 charts
                             dbc.Row(
                                 [
                                     dbc.Col(html.Div(dcc.Graph(figure=store3))),
                                     dbc.Col(html.Div(dcc.Graph(figure=store4))),
                                 ]
                             ),
-
-                            #content text
-                            dbc.Row(dbc.Col(html.P("hhh"))),                              
+                           
                         ]
                     )
 
         return content, header, paragraph, progress_bar, buttons
 
-#DEPT PAGE ROUTE
+    #DEPT PAGE
     elif pathname == "/depts":
         #sidebar components
         header = html.H4("Exploratory Data Analysis", className="display-4")
@@ -182,11 +178,11 @@ def render_page_content(pathname):
                             #content text
                             dbc.Row(
                                 [
-                                    dbc.Col(html.P("hhh"))
+                                    dbc.Col(html.H5("What impact does seasonality have on sales?"))
                                 ]
                             ),
 
-                            #Charts
+                            #Stationarity charts
                             dbc.Row(
                                 [
                                     dbc.Col(html.Div(dcc.Graph(figure=dept1)))
@@ -198,11 +194,11 @@ def render_page_content(pathname):
 
         return content, header, paragraph, progress_bar, buttons
 
-#PRED. MODELING ROUTE
+    #MODELS PAGE
     elif pathname == "/models":
         #sidebar components
         header = html.H4("Predictive Modeling", className="display-4")
-        paragraph = html.P("Here we analyze our predictive models and forcast the sales into 2013", className="lead")
+        paragraph = html.P("Here we analyze our predictive models and forecast the sales into 2013", className="lead")
         progress_bar = dbc.Progress(value=60, style={"height": "3px"}, className="mb-3")
         buttons = [dbc.Button("Back", href="/depts",outline=True,color="info", className="mr-1"),
                    dbc.Button("Next", href="/fcast",outline=True,color="info", className="mr-1")]
@@ -213,11 +209,11 @@ def render_page_content(pathname):
                             #content text
                             dbc.Row(
                                 [
-                                    dbc.Col(html.P("hhh"))
+                                    dbc.Col(html.H5("Which model will produced the most accurate results? ARIMA, SARIMA or SARIMAx?"))
                                 ]
                             ),
 
-                            #Charts
+                            #Model eval chart
                             dbc.Row(
                                 [
                                     dbc.Col(html.Div(dcc.Graph(figure=model1)))
@@ -228,7 +224,7 @@ def render_page_content(pathname):
                     )
 
         return content, header, paragraph, progress_bar, buttons
-#FCAST ROUTE
+    #FCAST PAGE
     elif pathname == "/fcast":
         #sidebar components
         header = html.H4("Predictive Modeling", className="display-4")
@@ -240,15 +236,7 @@ def render_page_content(pathname):
         #content components
         content = html.Div(
                         [
-
-                            #content text
-                            dbc.Row(
-                                [
-                                    dbc.Col(html.P("hhh"))
-                                ]
-                            ),
-
-                            #Charts
+                            #Fcast charts
                             dbc.Row(
                                 [
                                     dbc.Col(html.Div(dcc.Graph(figure=model2)))
@@ -260,27 +248,26 @@ def render_page_content(pathname):
 
         return content, header, paragraph, progress_bar, buttons
 
-#CONCLUSION ROUTE
+    #CONCLUSION
     elif pathname == "/conclusion":
         #sidebar components
-        header = html.H4("Conclusion", className="display-4")
+        header = html.H4("", className="display-4")
         paragraph = html.P("", className="lead")
         progress_bar = dbc.Progress(value=100, style={"height": "3px"}, className="mb-3")
         buttons = [dbc.Button("Back", href="/fcast",outline=True,color="info", className="mr-1"),
                     dbc.Button("Next", outline=True,color="info", className="mr-1", disabled=True)]
         
         #content components
-        content = html.Div(
-                        [
-                            #content text
-                            dbc.Row(
-                                [
-                                    dbc.Col(html.P("list???????????"))
-                                ]
-                            ),
-
-                             
-                        ]
+        content= html.Div(
+                        dbc.Container(
+                            [
+                                html.H1("Final Thoughts", className="display-3"),
+                                html.Li("'Holiday' is subjective"),
+                                html.Li("Missing/Limited Data"),
+                                html.Li("Addt'l Model Parameters")
+                            ],
+                            fluid=True,
+                        )
                     )
 
         return content, header, paragraph, progress_bar, buttons

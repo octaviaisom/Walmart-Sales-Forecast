@@ -1,4 +1,5 @@
-from plotly.subplots import make_subplots
+'''THIS FILE WAS EXPORTED FROM JUPYTER NOTEBOOK THEN FORMATTED FOR USE IN DASH APP'''
+
 import plotly.graph_objects as go
 import plotly.express as px
 import plotly.io as pio
@@ -102,7 +103,7 @@ def store_plots():
 
 
     byStore['SalesPerSF'] = byStore.Weekly_Sales/byStore.Size
-    store_scatter_sf = px.scatter(byStore, x="Size",y='SalesPerSF',color='Type',color_discrete_sequence=walmart_palette)
+    store_scatter_sf = px.scatter(byStore, x="Size",y='SalesPerSF',color='Type',color_discrete_sequence=walmart_palette,width=400)
     store_scatter_sf.update_traces(marker=dict(size=10, opacity=0.8))
     store_scatter_sf.update_layout(title={
             'text': "Size v. Sales per Sq. Ft.",
@@ -112,12 +113,24 @@ def store_plots():
             'yanchor': 'top'})
 
 
-    store_type_box = px.box(byStore, x="Type", y="Weekly_Sales", color='Type',color_discrete_sequence=walmart_palette)
-    store_type_box.update_traces(width=0.5)
+    store_type_box = px.box(byStore, x="Type", y="Weekly_Sales", color='Type',color_discrete_sequence=walmart_palette,width=400)
+    store_type_box.update_traces(width=0.7)
+    store_type_box.update_layout(title={
+            'text': "Store Type v. Sales",
+            'y':0.9,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'})
 
 
     store_size_box = px.box(byStore, x="Type", y="Size", color='Type',color_discrete_sequence=walmart_palette)
-    store_size_box.update_traces(width=0.5)
+    store_size_box.update_traces(width=0.7)
+    store_size_box.update_layout(title={
+            'text': "Store Type v. Size",
+            'y':0.9,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'})
     
 
     return store_size_box, store_type_box, size_dist, store_scatter_sf
@@ -164,10 +177,17 @@ def dept_plots():
     byStat = pd.merge(sales, stationarities, on='Dept', how='left')
     byStat = byStat.groupby(['Stationary','Date'], as_index=False).sum()
 
-    byStat_line = px.line(byStat,x='Date', y='Weekly_Sales', color='Stationary',color_discrete_sequence=walmart_palette)  
+    byStat_line = px.line(byStat,x='Date', y='Weekly_Sales', color='Stationary',color_discrete_sequence=walmart_palette)
+    byStat_line.update_layout(title={
+            'text': "Department Stationarity",
+            'y':0.9,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'})
     #byStat_line.update_layout(legend_orientation="h")
 
     byStat_pie = px.pie(byStat, values='Weekly_Sales', names='Stationary',color_discrete_sequence=walmart_palette)
+    byStat_pie.update_yaxes(automargin=True)
     byStat_pie.update_layout(showlegend=False)
     
     return byStat_line, byStat_pie
@@ -217,12 +237,14 @@ def model_plots():
             name = "Model 1 - No Holidays",
             line=dict(color=walmart_palette[1])
         ))
-    models_lines.update_layout(title={
-            'text': "Model Evaluation",
-            'y':0.9,
-            'x':0.5,
-            'xanchor': 'center',
-            'yanchor': 'top'})
+    models_lines.update_layout(
+            title={
+                'text': "Model Evaluation",
+                'y':0.9,
+                'x':0.5,
+                'xanchor': 'center',
+                'yanchor': 'top'}
+    )
 
     #SARIMAX (Walmart's Holidays)
     model2 = SARIMAX(train['Weekly_Sales'],exog=train['IsHoliday'],order=(2,0,2),seasonal_order=(1,0,0,52),enforce_invertibility=False)
@@ -287,12 +309,17 @@ def model_plots():
     fcast_predics = resultsx.predict(fcast_dates.index.min(),fcast_dates.index.max(),exog=exog_forecast)
     fcast_dates['Weekly_Sales'] = fcast_predics
 
-    fcast_dates['SalesType'] = "Forecast"
+    fcast_dates['SalesType'] = "Forecast (Model 1)"
     byDate['SalesType'] = "Actual"
     byDateFcast = pd.concat([byDate,fcast_dates])
     
     #Evaluate Forecast
     fcast_line = px.line(byDateFcast, x=byDateFcast.index,y='Weekly_Sales', color='SalesType',color_discrete_sequence=walmart_palette)
-    
+    fcast_line.update_layout(title={
+            'text': "Weekly Sales Forecast (Model 1)",
+            'y':0.9,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'})
     return models_lines, fcast_line
 
