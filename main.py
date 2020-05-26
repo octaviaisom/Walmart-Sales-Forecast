@@ -43,7 +43,7 @@ stores = pd.DataFrame(csv3)
 
 #setting color palette for charts
 pio.templates.default = "plotly_white"
-walmart_palette = ['#004c91','#007dc6','#78b9e7','#ffc220','#f47321','#76c043']
+walmart_palette = ['#004c91','#76c043','#007dc6','#78b9e7','#ffc220','#f47321']
 
 #---------------------------------------------------------------------------------------
 
@@ -172,7 +172,7 @@ def dept_plots():
     
     return byStat_line, byStat_pie
 
-'''#Create Models
+#Create Models
 def model_plots():
     from statsmodels.tsa.statespace.sarimax import SARIMAX
     from pmdarima import auto_arima    
@@ -296,4 +296,3 @@ def model_plots():
     
     return models_lines, fcast_line
 
-'''
