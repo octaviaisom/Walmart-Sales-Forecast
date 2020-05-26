@@ -1,16 +1,28 @@
-import plotly.graph_objects as go # or plotly.express as px
 import dash
-import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
+import plotly.graph_objects as go
 import plotly.express as px
 import main
-from statsmodels.tsa.stattools import adfuller
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
+#RETRIEVE PLOTS FROM MAIN.PY
+store1 = main.store_plots()[0]
+store2 = main.store_plots()[1]
+store3 = main.store_plots()[2]
+store4 = main.store_plots()[3]
+#dept1 = main.dept_plots()
+#dept2 = main.dept_plots()[1]
+#model1 = main.model_plots()[0]
+#model2 = main.model_plots()[1]
+sales = main.sales_plots()
 
+#-----------------------------------------------------------------------
+
+#STYLING DICST
 sidebar_style = {
     "position": "fixed",
     "top": 0,
@@ -27,108 +39,102 @@ content_style = {
     "padding": "2rem 1rem",
 }
 
+#-----------------------------------------------------------------------
+
 #SIDEBAR COMPONENTS
 sidebar = html.Div(
     [
         #dropdown menu
         html.Div(
-            [
-                dbc.DropdownMenu(
-                    label="Menu",
-                    color='link',
-                    children=[
-                        dbc.DropdownMenuItem("Overview"),
-                        dbc.DropdownMenuItem(divider=True),
+            dbc.DropdownMenu(
+                label="Menu",
+                color='link',
+                children=[
+                    dbc.DropdownMenuItem("Overview"),
+                    dbc.DropdownMenuItem(divider=True),
 
-                        dbc.DropdownMenuItem("Exploratoy Data Analysis", header=True),
-                        dbc.DropdownMenuItem("Stores"),
-                        dbc.DropdownMenuItem("Departments"),
-                        dbc.DropdownMenuItem(divider=True),
+                    dbc.DropdownMenuItem("Exploratoy Data Analysis", header=True),
+                    dbc.DropdownMenuItem("Stores"),
+                    dbc.DropdownMenuItem("Departments"),
+                    dbc.DropdownMenuItem(divider=True),
 
-                        dbc.DropdownMenuItem("Predictive Modeling", header=True),
-                        dbc.DropdownMenuItem("Modeling"),
-                        dbc.DropdownMenuItem("Forecasting"),
-                        dbc.DropdownMenuItem(divider=True),
+                    dbc.DropdownMenuItem("Predictive Modeling", header=True),
+                    dbc.DropdownMenuItem("Modeling"),
+                    dbc.DropdownMenuItem("Forecasting"),
+                    dbc.DropdownMenuItem(divider=True),
 
-                        dbc.DropdownMenuItem("Conclusion"),
-                    ],
-                ),
-
-            ]
+                    dbc.DropdownMenuItem("Conclusion"),
+                ],
+            ),  
         ),
         
         #sidebar header
-        html.H4("Title Here", className="display-4"),
+        html.Div(id="sb_header"),
 
         #sidebar paragraph
-        html.P("Lorem ipsum dolor sit amet, consectetur rus semper eget. Amet dictum sit amet justo donec enim diam.", className="lead"),
+        html.Div(id="sb_paragraph"),
         
         #progress bar
-        html.Div(dbc.Progress(value=50, style={"height": "3px"}, className="mb-3")),
+        html.Div(id="sb_progress"),
 
         #navi buttons
-        html.Div(
-            [
-
-                dbc.Button("Back", outline=True,color="info", className="mr-1"),
-                dbc.Button("Next", outline=True,color="info", className="mr-1"),
-
-            ]
-        )
+        html.Div(id="nav_buttons")
     ],
+    
     style=sidebar_style,
 )
 
-
-
-
+#CONTENT (RIGHT PANE) COMPONENTS
 content = html.Div(id="page-content", style=content_style)
+
+#PAGE LAYOUT
 app.layout = html.Div([dcc.Location(id="url"),sidebar, content])
-@app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 
+#-----------------------------------------------------------------------
 
+#RETRIEVE INPUTS FROM ROUTES, PASS COMPONENTS TO SIDEBAR AND CONTENT SECTIONS
+@app.callback([Output("page-content", "children"),
+                Output("sb_header", "children"),
+                Output("sb_paragraph", "children"),
+                Output("sb_progress", "children"),
+                Output("nav_buttons", "children")], 
+                [Input("url", "pathname")])
 
+#-----------------------------------------------------------------------
 
+#APP ROUTING
 def render_page_content(pathname):
-#HOME PAGE
+    #HOME PAGE
     if pathname == "/":
-        narrative = ""
-        sidebar_header = "Walmart Sales Analysis"
-        store1 = main.store_plots()[0]
-        store2 = main.store_plots()[1]
-        store3 = main.store_plots()[2]
-        store4 = main.store_plots()[3]
-        dept1 = main.dept_plots()
-        #dept2 = main.dept_plots()[1]
-        model1 = main.model_plots()[0]
-        model2 = main.model_plots()[1]
-        sales = main.sales_plots()
-        #overview content
-        overview = html.Div(
+        #sidebar components
+        header = html.H4("Exploratory Data Analysis", className="display-4")
+        paragraph = html.P("ITS WORKING! consectetur rus semper eget. Amet dictum sit amet justo donec enim diam.", className="lead")
+        progress_bar = dbc.Progress(value=0, style={"height": "3px"}, className="mb-3")
+        buttons = [dbc.Button("BackX", outline=True,color="info", className="mr-1"),
+                   dbc.Button("NextX", outline=True,color="info", className="mr-1")]
+        
+        #content components
+        content = html.Div(
             [
+                #content text
                 dbc.Row(dbc.Col(html.P("hhh"))),
 
+                #Charts
                 dbc.Row(
                     [
-                        dbc.Col(html.Div(dcc.Graph(figure=model1))),
-                        dbc.Col(html.Div(dcc.Graph(figure=model2))),
-                    ]
-                ),
-                dbc.Row(
-                    [
-                        dbc.Col(html.Div(dcc.Graph(figure=sales))),
-                    
+                        dbc.Col(html.Div(dcc.Graph(figure=store1))),
+                        dbc.Col(html.Div(dcc.Graph(figure=store2))),
                     ]
                 ),
             ]
         )
         
-        return overview
+        return content, header, paragraph, progress_bar, buttons
 
 #EDA OVERVIEW ROUTE
     elif pathname == "/exp_analysis":
         narrative = ""
-        sidebar_header = "Exploratory Data Analysis"
+        
 
 
         
