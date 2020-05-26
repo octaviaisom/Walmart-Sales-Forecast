@@ -124,7 +124,7 @@ def store_plots():
 
 #---------------------------------------------------------------------------------------
 
-#Sales by Dept
+'''#Sales by Dept
 def dept_plots():
     from statsmodels.tsa.stattools import adfuller
 
@@ -295,3 +295,4 @@ def model_plots():
     
     return models_lines, fcast_line
 
+'''
