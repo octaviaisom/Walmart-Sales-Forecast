@@ -9,13 +9,15 @@ import main
 
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
+#-----------------------------------------------------------------------
+
 #RETRIEVE PLOTS FROM MAIN.PY
 store1 = main.store_plots()[0]
 store2 = main.store_plots()[1]
 store3 = main.store_plots()[2]
 store4 = main.store_plots()[3]
-#dept1 = main.dept_plots()
-#dept2 = main.dept_plots()[1]
+dept1 = main.dept_plots()[0]
+dept2 = main.dept_plots()[1]
 #model1 = main.model_plots()[0]
 #model2 = main.model_plots()[1]
 sales = main.sales_plots()
@@ -34,9 +36,13 @@ sidebar_style = {
 }
 
 content_style = {
-    "margin-left": "24rem",
+    "margin-left": "23rem",
     "margin-right": "2rem",
     "padding": "2rem 1rem",
+}
+
+tab_style = {
+    "margin-left": "auto",
 }
 
 #-----------------------------------------------------------------------
@@ -50,20 +56,20 @@ sidebar = html.Div(
                 label="Menu",
                 color='link',
                 children=[
-                    dbc.DropdownMenuItem("Overview"),
+                    dbc.DropdownMenuItem("Overview", href="/"),
                     dbc.DropdownMenuItem(divider=True),
 
                     dbc.DropdownMenuItem("Exploratoy Data Analysis", header=True),
-                    dbc.DropdownMenuItem("Stores"),
-                    dbc.DropdownMenuItem("Departments"),
+                    dbc.DropdownMenuItem("Stores", href="/stores"),
+                    dbc.DropdownMenuItem("Departments", href="/depts"),
                     dbc.DropdownMenuItem(divider=True),
 
                     dbc.DropdownMenuItem("Predictive Modeling", header=True),
-                    dbc.DropdownMenuItem("Modeling"),
-                    dbc.DropdownMenuItem("Forecasting"),
+                    dbc.DropdownMenuItem("Modeling", href="/models"),
+                    dbc.DropdownMenuItem("Forecasting", href="/fcast"),
                     dbc.DropdownMenuItem(divider=True),
 
-                    dbc.DropdownMenuItem("Conclusion"),
+                    dbc.DropdownMenuItem("Conclusion", href="/conclusion"),
                 ],
             ),  
         ),
@@ -80,12 +86,11 @@ sidebar = html.Div(
         #navi buttons
         html.Div(id="nav_buttons")
     ],
-    
     style=sidebar_style,
 )
 
 #CONTENT (RIGHT PANE) COMPONENTS
-content = html.Div(id="page-content", style=content_style)
+content = html.Div(id="page_content", style=content_style)
 
 #PAGE LAYOUT
 app.layout = html.Div([dcc.Location(id="url"),sidebar, content])
@@ -93,7 +98,7 @@ app.layout = html.Div([dcc.Location(id="url"),sidebar, content])
 #-----------------------------------------------------------------------
 
 #RETRIEVE INPUTS FROM ROUTES, PASS COMPONENTS TO SIDEBAR AND CONTENT SECTIONS
-@app.callback([Output("page-content", "children"),
+@app.callback([Output("page_content", "children"),
                 Output("sb_header", "children"),
                 Output("sb_paragraph", "children"),
                 Output("sb_progress", "children"),
@@ -102,99 +107,186 @@ app.layout = html.Div([dcc.Location(id="url"),sidebar, content])
 
 #-----------------------------------------------------------------------
 
-#APP ROUTING
+#PAGE RENDERING/ROUTING
 def render_page_content(pathname):
-    #HOME PAGE
+    
     if pathname == "/":
         #sidebar components
-        header = html.H4("Exploratory Data Analysis", className="display-4")
-        paragraph = html.P("ITS WORKING! consectetur rus semper eget. Amet dictum sit amet justo donec enim diam.", className="lead")
+        header = html.H4("Walmart Sales Forecast", className="display-4")
+        paragraph = html.P("This project explores the sales of several Walmart locations. Exploratory data analysis was performed at the store and department level, the findings were used to forecast sales", className="lead")
         progress_bar = dbc.Progress(value=0, style={"height": "3px"}, className="mb-3")
-        buttons = [dbc.Button("BackX", outline=True,color="info", className="mr-1"),
-                   dbc.Button("NextX", outline=True,color="info", className="mr-1")]
+        buttons = [dbc.Button("Back", outline=True,color="info", className="mr-1", disabled=True),
+                    dbc.Button("Next", href="/stores", outline=True,color="info", className="mr-1")]
         
         #content components
         content = html.Div(
-            [
-                #content text
-                dbc.Row(dbc.Col(html.P("hhh"))),
-
-                #Charts
-                dbc.Row(
-                    [
-                        dbc.Col(html.Div(dcc.Graph(figure=store1))),
-                        dbc.Col(html.Div(dcc.Graph(figure=store2))),
-                    ]
-                ),
-            ]
-        )
-        
+                        [
+                            dbc.Row(dbc.Col(html.Div(dcc.Graph(figure=sales)))),
+                        ]
+                    )
         return content, header, paragraph, progress_bar, buttons
-
-#EDA OVERVIEW ROUTE
-    elif pathname == "/exp_analysis":
-        narrative = ""
-        
-
-
-        
-        return narrative
 
 #STORE PAGE ROUTE
     elif pathname == "/stores":
-        narrative = ""
-        sidebar_header = "Stores"
+        #sidebar components
+        header = html.H4("Exploratory Data Analysis", className="display-4")
+        paragraph = html.P("In this section we aim to discover the siginificance of the stores' types", className="lead")
+        progress_bar = dbc.Progress(value=25, style={"height": "3px"}, className="mb-3")
+        buttons = [dbc.Button("Back", href="/", outline=True,color="info", className="mr-1"),
+                   dbc.Button("Next", href="/depts", outline=True,color="info", className="mr-1")]
+        
+        #content components
+        content = html.Div(
+                        [
+                            #content text
+                            dbc.Row(dbc.Col(html.P("hhh"))),
 
-        #overview content
-        bar = main.store_plots()
-        overview = html.Div([
-            dcc.Graph(figure=bar)
-        ])
+                            #Charts
+                            dbc.Row(
+                                [
+                                    dbc.Col(html.Div(dcc.Graph(figure=store1))),
+                                    dbc.Col(html.Div(dcc.Graph(figure=store2))),
+                                ]
+                            ),
 
-              
-        return 
+                            #content text
+                            dbc.Row(dbc.Col(html.P("hhh"))),
+
+                            #Charts
+                            dbc.Row(
+                                [
+                                    dbc.Col(html.Div(dcc.Graph(figure=store3))),
+                                    dbc.Col(html.Div(dcc.Graph(figure=store4))),
+                                ]
+                            ),
+
+                            #content text
+                            dbc.Row(dbc.Col(html.P("hhh"))),                              
+                        ]
+                    )
+
+        return content, header, paragraph, progress_bar, buttons
 
 #DEPT PAGE ROUTE
     elif pathname == "/depts":
-        narrative = ""
-        sidebar_header = "Departments"
+        #sidebar components
+        header = html.H4("Exploratory Data Analysis", className="display-4")
+        paragraph = html.P("This sectoion analyzes the demand and stationarity of the departments", className="lead")
+        progress_bar = dbc.Progress(value=50, style={"height": "3px"}, className="mb-3")
+        buttons = [dbc.Button("Back", href="/stores", outline=True,color="info", className="mr-1"),
+                   dbc.Button("Next", href="/models", outline=True,color="info", className="mr-1")]
+        
+        #content components
+        content = html.Div(
+                        [
+                            #content text
+                            dbc.Row(
+                                [
+                                    dbc.Col(html.P("hhh"))
+                                ]
+                            ),
 
-        #overview content
-        bar = main.store_plots()
-        overview = html.Div([
-            dcc.Graph(figure=bar)
-        ])
+                            #Charts
+                            dbc.Row(
+                                [
+                                    dbc.Col(html.Div(dcc.Graph(figure=dept1)))
+                                ]
+                            ),
+                             
+                        ]
+                    )
 
-              
-        return narrative, sidebar_header, depts
+        return content, header, paragraph, progress_bar, buttons
 
 #PRED. MODELING ROUTE
-    elif pathname == "/pred_models":
-        narrative = ""
-        sidebar_header = "Predictive Modeling"
+    elif pathname == "/models":
+        #sidebar components
+        header = html.H4("Exploratory Data Analysis", className="display-4")
+        paragraph = html.P("ITS WORKING! consectetur rus semper eget. Amet dictum sit amet justo donec enim diam.", className="lead")
+        progress_bar = dbc.Progress(value=75, style={"height": "3px"}, className="mb-3")
+        buttons = [dbc.Button("Back", href="/depts",outline=True,color="info", className="mr-1"),
+                   dbc.Button("Next", href="/conclusion",outline=True,color="info", className="mr-1")]
+        
+        #content components
+        tab1_content = html.Div(
+                        [
+                            #content text
+                            dbc.Row(dbc.Col(html.P("hhh"))),
 
-        #overview content
-        bar = main.store_plots()
-        overview = html.Div([
-            dcc.Graph(figure=bar)
+                            #Charts
+                            dbc.Row(
+                                [
+                                    dbc.Col(html.Div(dcc.Graph(figure=store1))),
+                                    dbc.Col(html.Div(dcc.Graph(figure=store2))),
+                                ]
+                            ),
+                        ]
+                    )
+        tab2_content = html.Div(
+                        [
+                            #content text
+                            dbc.Row(dbc.Col(html.P("hhh"))),
+
+                            #Charts
+                            dbc.Row(
+                                [
+                                    dbc.Col(html.Div(dcc.Graph(figure=store1))),
+                                    dbc.Col(html.Div(dcc.Graph(figure=store2))),
+                                ]
+                            ),
+                        ]
+                    )                    
+        tab3_content = html.Div(
+                        [
+                            #content text
+                            dbc.Row(dbc.Col(html.P("hhh"))),
+
+                            #Charts
+                            dbc.Row(
+                                [
+                                    dbc.Col(html.Div(dcc.Graph(figure=store1))),
+                                    dbc.Col(html.Div(dcc.Graph(figure=store2))),
+                                ]
+                            ),
+                        ]
+                    )        
+
+        content = html.Div(
+            [dbc.Tabs(
+                [
+                    dbc.Tab(tab1_content, label="Tab 1", tab_style=tab_style,labelClassName="text-primary"),
+                    dbc.Tab(tab2_content, label="Tab 2", labelClassName="text-primary"),
+                    dbc.Tab(tab3_content, label="Tab 3",labelClassName="text-primary"),
+                ]
+            )        
         ])
-
-               
-        return narrative, sidebar_header, pred_models
+        return content, header, paragraph, progress_bar, buttons
 
 #CONCLUSION ROUTE
     elif pathname == "/conclusion":
-        narrative = ""
-        sidebar_header = "Conclusion"
+        #sidebar components
+        header = html.H4("Exploratory Data Analysis", className="display-4")
+        paragraph = html.P("ITS WORKING! consectetur rus semper eget. Amet dictum sit amet justo donec enim diam.", className="lead")
+        progress_bar = dbc.Progress(value=100, style={"height": "3px"}, className="mb-3")
+        buttons = [dbc.Button("Back", href="/models",outline=True,color="info", className="mr-1"),
+                    dbc.Button("Next", outline=True,color="info", className="mr-1", disabled=True)]
+        
+        #content components
+        content = html.Div(
+                        [
+                            #content text
+                            dbc.Row(dbc.Col(html.P("hhh"))),
 
-        #overview content
-        bar = main.store_plots()
-        overview = html.Div([
-            dcc.Graph(figure=bar)
-        ])
-
-               
-        return narrative, sidebar_header, conclusion
+                            #Charts
+                            dbc.Row(
+                                [
+                                    dbc.Col(html.Div(dcc.Graph(figure=store1))),
+                                    dbc.Col(html.Div(dcc.Graph(figure=store2))),
+                                ]
+                            ),
+                        ]
+                    )        
+        return content, header, paragraph, progress_bar, buttons
 
 #404 ROUTE      
     return dbc.Jumbotron(
