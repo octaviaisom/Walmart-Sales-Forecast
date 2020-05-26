@@ -112,8 +112,8 @@ def render_page_content(pathname):
     
     if pathname == "/":
         #sidebar components
-        header = html.H4("Walmart Sales Forecast", className="display-4")
-        paragraph = html.P("This project explores the sales of several Walmart locations. Exploratory data analysis was performed at the store and department level, the findings were used to forecast sales", className="lead")
+        header = html.H4("Sales Forecast", className="display-4")
+        paragraph = html.P("Exploratory data analysis was performed at the store and department level, the findings were used to forecast sales", className="lead")
         progress_bar = dbc.Progress(value=0, style={"height": "3px"}, className="mb-3")
         buttons = [dbc.Button("Back", outline=True,color="info", className="mr-1", disabled=True),
                     dbc.Button("Next", href="/stores", outline=True,color="info", className="mr-1")]
