@@ -43,7 +43,7 @@ stores = pd.DataFrame(csv3)
 
 #setting color palette for charts
 pio.templates.default = "plotly_white"
-walmart_palette = ['#004c91','#76c043','#007dc6','#78b9e7','#ffc220','#f47321']
+walmart_palette = ['#004c91','#ffc220','#007dc6','#78b9e7','#76c043','#f47321']
 
 #---------------------------------------------------------------------------------------
 
@@ -113,11 +113,11 @@ def store_plots():
 
 
     store_type_box = px.box(byStore, x="Type", y="Weekly_Sales", color='Type',color_discrete_sequence=walmart_palette)
-    store_type_box.update_traces(width=0.7)
+    store_type_box.update_traces(width=0.5)
 
 
     store_size_box = px.box(byStore, x="Type", y="Size", color='Type',color_discrete_sequence=walmart_palette)
-    store_size_box.update_traces(width=0.7)
+    store_size_box.update_traces(width=0.5)
     
 
     return store_size_box, store_type_box, size_dist, store_scatter_sf
@@ -267,7 +267,7 @@ def model_plots():
             x=models.index,
             y=models.AllHolidays,
             name = "Model 3 - All Holidays",
-            line=dict(color=walmart_palette[5])
+            line=dict(color=walmart_palette[3])
         ))
    
     #Forecast the Future
